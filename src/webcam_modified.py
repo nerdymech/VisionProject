@@ -5,11 +5,13 @@
 
 used by Adela Wee and Michelle Sit to debug issues with OpenCV face detection
 """
-
+from cv_bridge import CvBridge, CvBridgeError
+import sensor_msgs
 import scipy
 import numpy
 import cv2
 import sys
+import roslib
 
 #Create xml classifiers
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
@@ -18,7 +20,7 @@ smile_cascade = cv2.CascadeClassifier('haarcascade_smile.xml')
 
 video_capture = cv2.VideoCapture(0)
 
-while True:
+while (cap.isOpened()):
     # Capture frame-by-frame
     ret, frame = video_capture.read()
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)

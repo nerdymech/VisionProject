@@ -28,6 +28,7 @@ faces = face_cascade.detectMultiScale(
     minNeighbors=10,
     minSize=(40,40)
     )
+
 #print "detected faces"
 
 for (x,y,w,h) in faces:
@@ -36,7 +37,7 @@ for (x,y,w,h) in faces:
     roi_color = img[y:y+h, x:x+w]
     #print "here"
     #code to run smile detection (since smiles are on faces)
-    smiles = smile_cascade.detectMultiScale(roi_gray, scaleFactor=1.2, minNeighbors=4, minSize=(30,30))
+    smiles = smile_cascade.detectMultiScale(roi_gray, scaleFactor=0.6, minNeighbors=4, minSize=(30,30))
 
     for (sx,sy,sw,sh) in smiles:
         cv2.rectangle(roi_color,(sx,sy),(sx+sw,sy+sh),(0,255,0),2)
