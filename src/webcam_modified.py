@@ -36,15 +36,27 @@ while (cap.isOpened()):
 
     # Draw a rectangle around the faces
     for (x,y,w,h) in faces:
+        #terms of cv2 drawing shapes
+        #referencing image where you want to draw shapes
+        #center of shape
+        #rectangle dimensions
+        #color
+        #line thickness
         cv2.rectangle(frame,(x,y),(x+w,y+h),(255,0,0),2)
-        #roi_gray = gray[y:y+h, x:x+w]
-        #roi_color = frame[y:y+h, x:x+w]
+        roi_gray = gray[y:y+h, x:x+w]
+        roi_color = frame[y:y+h, x:x+w]
         #print "here"
         #code to run smile detection (since smiles are on faces)
-        smiles = smile_cascade.detectMultiScale(frame, scaleFactor=1.2, minNeighbors=4, maxSize=(30,20))
+        smiles = smile_cascade.detectMultiScale(
+            roi_color, 
+            scaleFactor=1.1, 
+            minNeighbors=4, 
+            minSize=(30,30),
+            flags=cv2.cv.CV_HAAR_SCALE_IMAGE)
+        print smiles
         print "smiles detected!"
         for (sx,sy,sw,sh) in smiles:
-            cv2.rectangle(frame,(sx,sy),(sx+sw,sy+sh),(0,255,0),2)
+            cv2.circle(frame,(sx,sy),(sx+sw),(0,0,255),2)
 
     # Display the resulting frame
     cv2.imshow('Video', frame)
