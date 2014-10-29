@@ -18,6 +18,10 @@ import cv2
 def smile_received(msg,pub):
     #processes shots from Neato
 
+    #convert neato ros img msgs into opencv images w cv_bridge
+
+    #feed necessary coordinates from opencv into things that get published
+
 
 def unmanned_drive():
     pub = rospy.Publisher('cmd_vel', Twist, queue_size=10)
@@ -34,8 +38,24 @@ def unmanned_drive():
             #recall that x,y,z forward velocity then x,y,z rotational velocity
             #should probably acct for proximity with laser scan
             velocity_msg = Twist(Vector3((0.1,0.0,0.0),Vector3(0.0,0.0,kp*location_C)))
-            print "smile detected, moving left"
+            print "happniess detected, moving left"
 
         elif person coordinates > center of image -5pixels and smile_received == True:
-            velocity_msg = Twist(Vector3((0.1,0.0,0.0),Vector3(0.0,0.0,kp*location_C))
-            print "smile detected, moving right"
+            velocity_msg = Twist(Vector3((0.1,0.0,0.0),Vector3(0.0,0.0,kp*location_C)))
+            print "happiness detected, moving right"
+
+        elif smile_received == False:
+            velocity_msg = Twist(Vector3(-0.1,0.0,0.0),Vector3(0.0,0.0,0.0)))
+            print "i go away from unhappy people"
+    else: 
+        #stay put
+        velocity_msg = Twist(Vector3(0.0,0.0,0.0),Vector3(0.0,0.0,0.0)))
+        print "I don't see any faces!"
+
+    pub.publish(velocity_msg)
+    r.sleep()
+
+if __name__ == '__main__':
+    try:
+        unmanned_drive()
+    except rospy.ROSInterruptException: pass
