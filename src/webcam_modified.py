@@ -75,6 +75,7 @@ def detectFaces() :
         print "smiles detected!"
         for (sx,sy,sw,sh) in smiles:
             cv2.circle(frame,(sx,sy),((sw+sh)/2),(0,0,255),2)
+            print "hi"
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
