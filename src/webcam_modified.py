@@ -46,15 +46,15 @@ while True:
         #print "here"
         #code to run smile detection (since smiles are on faces)
         smiles = smile_cascade.detectMultiScale(
-            roi_color, 
+            roi_gray, 
             scaleFactor=1.1, 
-            minNeighbors=4, 
-            minSize=(30,30),
+            minNeighbors=10, 
+            minSize=(10,10),
             flags=cv2.cv.CV_HAAR_SCALE_IMAGE)
         print smiles
         print "smiles detected!"
         for (sx,sy,sw,sh) in smiles:
-            cv2.circle(frame,(sx,sy),(sx+sw),(0,0,255),2)
+            cv2.circle(frame,(sx,sy),((sw+sh)/2),(0,0,255),2)
 
     # Display the resulting frame
     cv2.imshow('Video', frame)
