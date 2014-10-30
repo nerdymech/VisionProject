@@ -4,8 +4,6 @@ import cv2
 import scipy
 import sys
 
-#in order to run file, type into terminal 
-#python haas_face_detect.py haarcascade_frontalface_default.xml haarcascade_eye.xml
 
 #Create xml classifiers
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
