@@ -21,7 +21,7 @@ def smile_received(msg,pub):
     #convert neato ros img msgs into opencv images w cv_bridge
 
     #feed necessary coordinates from opencv into things that get published
-
+    
 
 def unmanned_drive():
     pub = rospy.Publisher('cmd_vel', Twist, queue_size=10)
