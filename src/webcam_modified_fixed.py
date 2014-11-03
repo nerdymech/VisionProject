@@ -36,11 +36,12 @@ def detectFaces():
             minSize=(30, 30),
             flags=cv2.cv.CV_HAAR_SCALE_IMAGE
         )
-        print faces
-        print "faces detected!"
+        if faces != ():
+            print faces
+            print "I see you!"
 
-        # Draw a rectangle around the faces
-        for (x,y,w,h) in faces:
+            # Draw a rectangle around the faces
+            for (x,y,w,h) in faces:
             #terms of cv2 drawing shapes
             #referencing image where you want to draw shapes
             #center of shape
@@ -74,7 +75,7 @@ def detectFaces():
         cv2.imshow('ROI', roi_gray)
         cv2.imshow('Other ROI', roi_gray2)
 
-        if cv2.waitKey(1) & 0xFF == ord('q'):
+    elif cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
     # When everything is done, release the capture
