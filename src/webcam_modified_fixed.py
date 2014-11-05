@@ -44,6 +44,7 @@ def detectFaces():
                 # I don't know how/why this next line works
                 # global roi_gray
                 roi_gray = gray[y:y+h, x:x+w]
+                print roi_gray
                 x_upperbound = x+ 2*(w/3)
                 y_upperbound = y+ 2*(h/3) 
                 print y_upperbound
@@ -51,6 +52,7 @@ def detectFaces():
                 print x_upperbound
                 print x+w
                 cropped_face = roi_gray[y_upperbound:y+h, x_upperbound:x+w]
+                print cropped_face
                 #roi_color = frame[y:y+h, x:x+w]
                 #print "here"
                 #code to run smile detection (since smiles are on faces)
@@ -69,13 +71,15 @@ def detectFaces():
 
                     # import pdb
                     # pdb.set_trace()
+            cv2.imshow('ROI', roi_gray)
+            # cv2.imshow('Cropped face', cropped_face)
 
                 # Display the resulting frame
             # else:
             #     print "There are no faces."
             
             cv2.imshow('Video', frame)
-            cv2.imshow('ROI', roi_gray)
+            # cv2.imshow('ROI', roi_gray)
             # cv2.imshow('Cropped face', cropped_face)
         
             if cv2.waitKey(1) & 0xFF == ord('q'):
