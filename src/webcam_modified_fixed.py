@@ -65,14 +65,12 @@ def detectFaces():
                 # Display the resulting frame
             else:
                 print "There are no faces."
+            
             cv2.imshow('Video', frame)
             cv2.imshow('ROI', roi_gray)
-            
-
         
-
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        pass
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                pass
 
     # When everything is done, release the capture
     video_capture.release()
