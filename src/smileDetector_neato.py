@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 """
-
 Code from CompRobo
 Adela Wee and Michelle Sit"""
 
@@ -20,27 +19,58 @@ from std_msgs.msg import String
 #Create xml classifiers
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 eye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')
-# smile_cascade = cv2.CascadeClassifier('haarcascade_smile.xml')
 
 class smileDetect:
+
+    def listener(self):
+        rospy.init_node('detectFaces', anonymous =True)
+        self.detectFaces()
+        self.videothing()
+        rospy.spin()
+    
+    def __init__(self):
+        self.image = None
+        self.camera_listener = rospy.Subscriber("camera/image_raw",Image, self.detectFaces)
+        self.image_pub = rospy.Publisher("image_topic_2",Image)
+        self.bridge = CvBridge() 
+        print "got here"
+        self.detectFaces(msg)
+        self.videothing()
+        print "here also"   
+        # print "initialized"
+
     def detectFaces(self, msg):
-        print"here"
+        # pdb.set_trace()
         #reads in the images from the camera
         # video_capture = cv2.VideoCapture(0)
         try:
             cv_image = self.bridge.imgmsg_to_cv2(msg, "bgr8")
         except CvBridgeError, e:
             print e
-        cv2.imshow ("cv_image", cv_image)
-        # image = numpy.asanyarray(cv_image)
-        video_capture = cv2.VideoCapture(image)
+        self.image = numpy.asanyarray(cv_image)
+        print "self.image assigned"
+        cv2.imshow ("cv_image", self.image)
+        #need this to be in the same method and in the same indent as the cv2.imshow line
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            pass
 
-        # cv2.imshow ("image", image)
+    def videothing(self):
 
-        while True:
-            # Capture frame-by-frame
-            ret, frame = video_capture.read()
-            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        pdb.set_trace()
+        # while True:
+        # Capture frame-by-frame
+        # ret, frame = video_capture.read()
+        # ret, image = image
+        #return pauses that section of the code until the other section of the code runs
+        print self.image
+        if (self.image == None):
+            print "no image detected"
+            pass
+
+        else: 
+            gray = cv2.cvtColor(self.image, cv2.COLOR_BGR2GRAY)
+            cv2.imshow ("self.image gray", gray)
+            print "okay"
 
             faces = face_cascade.detectMultiScale(
                 gray,
@@ -60,11 +90,7 @@ class smileDetect:
                     print "I see %s people" %len(faces)
                     #center of shape, rectangle dimensions, color, line thickness
                     #cv2.rectangle (img, vertex1, vertex across from 1, color, something)
-                    faceRect = cv2.rectangle(frame,(x,y),(x+w,y+h),(255,0,0),0)
-                    print y
-                    print y+h
-                    print x
-                    print x+w
+                    faceRect = cv2.rectangle(self.image,(x,y),(x+w,y+h),(255,0,0),0)
                     roi_gray = gray[6*(y/5):y+(0.9*h),x+20:x+w-20]
                     # print roi_gray
                     # roi_gray = gray[y+40:y+h-10,x+20:x+w-20]
@@ -87,59 +113,26 @@ class smileDetect:
                             lag = smiledetectTime - facedetectTime
                             print "lag: %s" %lag
 
-                    # pdb.set_trace()
-                    # print roi_gray
-                    # x_upperbound = x+ w/2
-                
-                    # print "x_uppercropped %s" %x_upperbound
-                    # print "total width %s" %(x+w)
-                    # cropped_face = gray[x_upperbound:x+w, y:y+h]
-                    # print cropped_face
-                    #roi_color = frame[y:y+h, x:x+w]
-                    #code to run smile detection (since smiles are on faces)
-                    # smiles = smile_cascade.detectMultiScale(
-                    #     cropped_face, 
-                    #     scaleFactor=1.1, 
-                    #     minNeighbors=10, 
-                    #     minSize=(20,20))
-                    # print smiles
-                    # print "i found %s smiles" %len(smiles)
-                   
-                    # for (sx,sy,sw,sh) in smiles:    
-                    #     cv2.rectangle(frame,(sx+x,sy+y),(x+sw,y+sh),(0,0,255),0)
-                    #     # global roi_gray2
-                    #     roi_gray2 = gray[y+sy:y+sh, x+sx:x+sw]
-
-                    #     # import pdb
                     #     # pdb.set_trace()
                 cv2.imshow("ROI", roi_gray)
                 cv2.imshow('ROI_resized', resized_roi)
-                # cv2.imshow('Cropped face', cropped_face)
 
-                    # Display the resulting frame
-               
-            cv2.imshow('Video', frame)
-            # cv2.imshow('ROI', roi_gray)
-            # cv2.imshow('Cropped face', cropped_face)
-                
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                pass
+            # cv2.imshow('Video', self.image)
+            
+                if cv2.waitKey(1) & 0xFF == ord('q'):
+                    pass
 
-            # import pdb
-            # pdb.set_trace()
+        # pdb.set_trace()
 
-        # When everything is done, release the capture
-        video_capture.release()
+    # When everything is done, release the capture
+    # video_capture.release()
         cv2.destroyAllWindows()
 
-    def __init__(self):
-        self.camera_listener = rospy.Subscriber("camera/image_raw",Image, self.detectFaces)
-        self.image_pub = rospy.Publisher("image_topic_2",Image)
-        self.bridge = CvBridge()    
-        print "initialized"
-
 if __name__ == '__main__':
+
     model = train_smiles()
-    df = smileDetect()
-    rospy.init_node('detectFaces', anonymous =True)
-    rospy.spin()
+    de = smileDetect()
+    de.listener()
+    # de = smileDetect.videothing()
+    # rospy.init_node('detectFaces', anonymous =True)
+    # rospy.spin()
