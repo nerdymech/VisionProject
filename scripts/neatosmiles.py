@@ -3,6 +3,11 @@
 Code from CompRobo
 Adela Wee and Michelle Sit"""
 
+##Attempted to modify code such that we could read the video feed from the neato and detect faces on it.
+##fairly inconsistent at doing so; quite possible that the rasp pi does not have enough resolution in its camera 
+##(especially when streamed wirelessly)
+
+
 import scipy
 import numpy
 import cv2
@@ -11,6 +16,7 @@ import sys
 import pdb
 from datetime import datetime
 
+#initialize things for ROS (necessary to see the camera feed)
 import rospy
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
@@ -33,7 +39,7 @@ class smileDetect:
 
     def convertingNumpy(self, msg):
         print "converting image"
-        #reads in the images from the camera
+        #reads in the images from the camera and converts it from ros image to openCV image
         try:
             cv_image = self.bridge.imgmsg_to_cv2(msg, "bgr8")
         except CvBridgeError, e:
@@ -56,7 +62,7 @@ class smileDetect:
             gray = cv2.cvtColor(self.image, cv2.COLOR_BGR2GRAY)
             cv2.imshow ("self.image gray", gray)
             print "converted to greyscale!"
-
+            #implementing facial detection using OpenCV Haar Cascades
             faces = face_cascade.detectMultiScale(
                 gray,
                 scaleFactor=1.5,
