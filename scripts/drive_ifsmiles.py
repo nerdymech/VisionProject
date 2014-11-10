@@ -21,7 +21,7 @@ def move_neato():
 
 	#if time, add in a dist_buffer = 
 	while not rospy.is_shutdown():
-		#move robot! this is kind of a state machine
+		#move robot! this is a state machine
 		if faces >= 1:
 
 			if webcam.avg >= 1:
