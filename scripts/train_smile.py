@@ -5,6 +5,9 @@ from pickle import dump
 import numpy
 # from numpy import *
 
+
+##this code runs the machine learning script that trains itself 
+##based on a database of smiles taken from Paul's Lab from UCSD
 def train_smiles ():
   data = load_smiles()
   model = LogisticRegression()
