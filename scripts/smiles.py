@@ -2,6 +2,8 @@
 """
 Code from CompRobo
 Adela Wee and Michelle Sit"""
+##edited and restructured with the help of Sophie Li, but this code was not used to demonstrate the project 
+##did not work
 
 import scipy
 import numpy
