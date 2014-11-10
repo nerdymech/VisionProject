@@ -3,6 +3,7 @@
 #Comprobo Vision Project
 #Adela Wee and Michelle Sit
 #Fall 2014
+#initial pseudocode to fill in for driving the neato around
 
 import rospy
 from std_msgs.msg import String
