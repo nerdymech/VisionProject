@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 """
 Code from CompRobo
-Adela Wee and Michelle Sit"""
+Adela Wee and Michelle Sit
+
+code needs webcam on laptop to work. drives neato forwards or backwards depending
+on if the user detected by the laptop is smiling or not."""
 
 import scipy
 import numpy
