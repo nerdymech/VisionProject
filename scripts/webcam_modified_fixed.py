@@ -2,7 +2,8 @@
 """
 
 Code from CompRobo
-Adela Wee and Michelle Sit"""
+Adela Wee and Michelle Sit
+Looks at face from laptop webcam feed and determines if there are any faces and if they're smiling or not"""
 
 import scipy
 import numpy
@@ -45,6 +46,7 @@ def detectFaces():
             print "There are no faces."
             
         else:
+            #time stamps included for debugging purposes to monitor camera's FPS
             facedetectTime = datetime.now()
             print "face detected time: %s" %facedetectTime
             # Draw a rectangle around the faces
