@@ -1,7 +1,14 @@
 #!/usr/bin/env python
 """
 Code from CompRobo
-Adela Wee and Michelle Sit"""
+Adela Wee and Michelle Sit
+
+Final version of code that runs via laptop webcam
+Looks at face detected by running OpenCV Haar Cascades off of laptop camera
+Then figures out if you're smiling or not
+These smiles then get translated to driving forwards/backwards
+
+This working demo would not have been possible without the help of Rachel Boy or Sophie Li"""
 
 import scipy
 import numpy
@@ -54,7 +61,7 @@ def detectFaces():
             
             #resize roi_gray to (24, 24)
             if len(roi_gray) == 0:
-                move_neato("stop")
+                move_neato("stop")#pass stop command to other function
             else:
                 resized_roi = cv2.resize(roi_gray, (24, 24)).T/255.0
                 # scipy.misc.imsave('outfile.jpg', resized_roi)
@@ -117,11 +124,11 @@ def move_neato(command):
 
 if __name__ == '__main__':
 	try:
-		video_capture = cv2.VideoCapture(0)
-		rospy.init_node('teleop', anonymous=True)
-		model = train_smiles()
+		video_capture = cv2.VideoCapture(0) #init first frame
+		rospy.init_node('teleop', anonymous=True) #create teleop node
+		model = train_smiles() #run code to generate smile detector
 		while not rospy.is_shutdown():
-		  detectFaces()
+		  detectFaces() #run code that runs everything else
         
 
 		
